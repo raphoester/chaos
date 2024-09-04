@@ -8,9 +8,8 @@ You have to provide some input values to your function, and you have to check th
 ```go 
 func TestSaveUser(t *testing.T) {
     repository := NewRepository()
-	err := repository.SaveUser("John", "Doe")
-	if err != nil {
-        t.Errorf("Error while saving user: %v", err)
+	if err := repository.SaveUser("John", "Doe"); err != nil {
+        t.Errorf("error while saving user: %v", err)
     }
 }
 ```
