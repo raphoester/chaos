@@ -35,10 +35,12 @@ Chaos is a library that generates random values for you, and makes them reproduc
 ```go
 func TestSaveUser(t *testing.T) {
     repository := NewRepository()
-    firstName := chaos.String(10, "firstName") // generates a random string of length 10 with the seed "firstName"
+
+	// generate a random string of length 10 with the seed "firstName"
+    firstName := chaos.String(10, "firstName") 
     lastName := chaos.String(10, "lastName")
-    err := repository.SaveUser(firstName, lastName)
-    if err != nil {
+	
+    if err := repository.SaveUser(firstName, lastName); err != nil {
         t.Errorf("Error while saving user: %v", err)
     }
 }
