@@ -51,7 +51,7 @@ func String(length int, seed ...any) string {
 }
 
 // SliceItem returns a deterministic item from a slice.
-func SliceItem[T any](items []T, seed ...any) T {
+func SliceItem[S ~[]T, T any](items S, seed ...any) T {
 	var t T
 	if len(items) == 0 {
 		return t
@@ -61,13 +61,13 @@ func SliceItem[T any](items []T, seed ...any) T {
 
 // UniqueSliceItems returns a slice with a length of count.
 // The items are unique.
-func UniqueSliceItems[T any](items []T, count int, seed ...any) ([]T, error) {
+func UniqueSliceItems[S ~[]T, T any](items S, count int, seed ...any) (S, error) {
 	if len(items) < count {
 		return nil, fmt.Errorf("not enough items to select from: %d < %d", len(items), count)
 	}
 
-	selectedItems := make([]T, 0, count)
-	availableItems := append([]T(nil), items...)
+	selectedItems := make(S, 0, count)
+	availableItems := append(S(nil), items...)
 	for i := 0; i < count; i++ {
 		index := Int(len(availableItems)-1, seed, i)
 		selectedItems = append(selectedItems, availableItems[index])
@@ -80,7 +80,7 @@ func UniqueSliceItems[T any](items []T, count int, seed ...any) ([]T, error) {
 // MustUniqueSliceItems returns a slice with a length of count.
 // The items are unique.
 // If there are not enough items to select from, it panics.
-func MustUniqueSliceItems[T any](items []T, count int, seed ...any) []T {
+func MustUniqueSliceItems[S ~[]T, T any](items S, count int, seed ...any) S {
 	selectedItems, err := UniqueSliceItems(items, count, seed)
 	if err != nil {
 		panic(err)
