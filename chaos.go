@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/google/uuid"
 	"golang.org/x/exp/constraints"
 )
 
@@ -78,7 +79,7 @@ func UniqueSliceItems[T any](items []T, count int, seed ...any) ([]T, error) {
 // MustUniqueSliceItems returns a slice with a length of count.
 // The items are unique.
 // If there are not enough items to select from, it panics.
-func MustUniqueSliceItems[T any](seed string, items []T, count int) []T {
+func MustUniqueSliceItems[T any](items []T, count int, seed ...any) []T {
 	selectedItems, err := UniqueSliceItems(items, count, seed)
 	if err != nil {
 		panic(err)
@@ -88,11 +89,21 @@ func MustUniqueSliceItems[T any](seed string, items []T, count int) []T {
 
 // IntSlice returns a slice of deterministic numbers between 0 and high included.
 // The length of the slice is length.
-func IntSlice(seed string, high int, length int) []int {
+func IntSlice(high int, length int, seed ...any) []int {
 	result := make([]int, length)
 	for i := 0; i < length; i++ {
 		result[i] = Int(high, seed, i)
 	}
 
 	return result
+}
+
+func UUID(seed ...any) uuid.UUID {
+	s := stringToSeed(append(seed, "uuid"))
+	rnd := rand.New(rand.NewSource(s))
+	id, err := uuid.NewRandomFromReader(rnd)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }
