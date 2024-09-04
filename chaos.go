@@ -26,6 +26,7 @@ func Duration(n time.Duration, seed ...any) time.Duration {
 	return time.Duration(Int(n.Nanoseconds(), seed))
 }
 
+// Time returns a deterministic time between Unix epoch and 2106-02-07 08:28:16.
 func Time(seed ...any) time.Time {
 	return time.Unix(int64(Int(1<<32, seed)), 0)
 }
@@ -98,6 +99,7 @@ func IntSlice(high int, length int, seed ...any) []int {
 	return result
 }
 
+// UUID returns a deterministic UUID.
 func UUID(seed ...any) uuid.UUID {
 	s := stringToSeed(append(seed, "uuid"))
 	rnd := rand.New(rand.NewSource(s))
