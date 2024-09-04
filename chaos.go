@@ -61,6 +61,7 @@ func SliceItem[S ~[]T, T any](items S, seed ...any) T {
 
 // UniqueSliceItems returns a slice with a length of count.
 // The items are unique.
+// If there are not enough items to select from, it returns an error.
 func UniqueSliceItems[S ~[]T, T any](items S, count int, seed ...any) (S, error) {
 	if len(items) < count {
 		return nil, fmt.Errorf("not enough items to select from: %d < %d", len(items), count)
