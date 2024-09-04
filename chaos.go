@@ -25,6 +25,10 @@ func Duration(n time.Duration, seed ...any) time.Duration {
 	return time.Duration(Int(n.Nanoseconds(), seed))
 }
 
+func Time(seed ...any) time.Time {
+	return time.Unix(int64(Int(1<<32, seed)), 0)
+}
+
 // Float returns a deterministic float between 0 and n
 func Float[F constraints.Float](n F, seed ...any) F {
 	u := stringToSeed(seed)
