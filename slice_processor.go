@@ -14,6 +14,10 @@ type SliceProcessor[S ~[]T, T any] struct {
 	c *Chaos
 }
 
+func SliceItem[S ~[]T, T any](items S) T {
+	return NewSliceProcessor[S, T](singleton).Item(items)
+}
+
 // Item returns a random item from the slice.
 func (s *SliceProcessor[S, T]) Item(items S) T {
 	var ret T
@@ -22,6 +26,11 @@ func (s *SliceProcessor[S, T]) Item(items S) T {
 	}
 
 	return items[s.c.Int(len(items)-1)]
+}
+
+// UniqueSliceItems returns a random item from the slice.
+func UniqueSliceItems[S ~[]T, T any](items S, count int) (S, error) {
+	return NewSliceProcessor[S, T](singleton).UniqueItems(items, count)
 }
 
 // UniqueItems returns a slice with a length of count.
@@ -41,6 +50,11 @@ func (s *SliceProcessor[S, T]) UniqueItems(items S, count int) (S, error) {
 	}
 
 	return selectedItems, nil
+}
+
+// MustUniqueSliceItems returns a random item from the slice.
+func MustUniqueSliceItems[S ~[]T, T any](items S, count int) S {
+	return NewSliceProcessor[S, T](singleton).MustUniqueItems(items, count)
 }
 
 // MustUniqueItems returns a slice with a length of count.
