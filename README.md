@@ -38,7 +38,7 @@ Chaos is a library that generates "random" (deterministic) values for you, and m
 func TestSaveUser(t *testing.T) {
     repository := NewRepository()
 
-    // generate a random string of length 10 with the seed "firstName"
+    // generate a random string of length 10 with the default seed
     firstName := chaos.String(10) 
     lastName := chaos.String(10)
 	
