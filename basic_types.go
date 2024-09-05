@@ -12,7 +12,7 @@ import (
 //   - The generated integer is guaranteed to be within the range [0, n],
 //     including both 0 and n as possible values.
 func Int32(n int32) int32 {
-	return singleton.Int32(n + 1)
+	return singleton.Int32(n)
 }
 
 // Int32 generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
