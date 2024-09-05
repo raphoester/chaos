@@ -6,47 +6,83 @@ import (
 	"github.com/google/uuid"
 )
 
+// Int32 generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func Int32(n int32) int32 {
-	return singleton.Int32(n)
+	return singleton.Int32(n + 1)
 }
 
-// Int32 returns a random number between 0 and n.
+// Int32 generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func (c *Chaos) Int32(n int32) int32 {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
-	return r.Int31n(n)
+	return r.Int31n(n + 1)
 }
 
-// Int64 returns a random number between 0 and n.
+// Int64 generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func Int64(n int64) int64 {
 	return singleton.Int64(n)
 }
 
-// Int64 returns a deterministic number between 0 and n.
+// Int64 generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func (c *Chaos) Int64(n int64) int64 {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
-	return r.Int63n(n)
+	return r.Int63n(n + 1)
 }
 
-// Int returns a random number between 0 and n.
+// Int generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func Int(n int) int {
 	return singleton.Int(n)
 }
 
-// Int returns a deterministic number between 0 and n.
+// Int generates a deterministic integer between 0 and n (inclusive) based on the provided seed.
+// Behavior:
+//   - If n <= 0, the function returns 0.
+//   - The generated integer is guaranteed to be within the range [0, n],
+//     including both 0 and n as possible values.
 func (c *Chaos) Int(n int) int {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
-	return r.Intn(n)
+	return r.Intn(n + 1)
 }
 
+// Bool generates a deterministic boolean.
 func Bool() bool {
 	return singleton.Bool()
 }
 
-// Bool returns a deterministic boolean.
+// Bool generates a deterministic boolean.
 func (c *Chaos) Bool() bool {
 	return c.Int64(2)%2 == 0
 }
 
+// Duration returns a random duration between 0 and n.
 func Duration(n time.Duration) time.Duration {
 	return singleton.Duration(n)
 }

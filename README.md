@@ -51,7 +51,9 @@ func TestSaveUser(t *testing.T) {
 Unlike your random seed (typically the current time), the hardcoded seed doesn't change between executions.
 That means you will get the same values every single time.
 
-There are many other functions that allow you to generate different kinds of values: 
+## Available Functions
+
+There are many functions that allow you to generate different kinds of values: 
 - Int
 - Float
 - Bool
@@ -59,3 +61,32 @@ There are many other functions that allow you to generate different kinds of val
 - UUID
 - Time
 - Slice items...
+
+For detailed usage of each function, please refer to the source code and test files.
+
+## Contributing
+
+If you'd like to contribute to Chaos, please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Running Tests
+
+To run the tests for Chaos:
+
+1. Make sure you have Go installed on your system.
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/chaos.git
+   cd chaos
+   ```
+3. Run the tests using the `go test` command:
+   ```bash
+   go test -v ./...
+   ```
+
+This will run all the tests in the package and display the results.

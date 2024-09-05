@@ -1,6 +1,9 @@
 package chaos
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // NewSliceProcessor returns a new SliceProcessor.
 func NewSliceProcessor[S ~[]T, T any](c *Chaos) *SliceProcessor[S, T] {
@@ -21,12 +24,16 @@ func SliceItem[S ~[]T, T any](items S) T {
 // Item returns a random item from the slice.
 func (s *SliceProcessor[S, T]) Item(items S) T {
 	var ret T
-	if len(items) > 0 {
+	if len(items)== 0 {
 		return ret
 	}
 
 	return items[s.c.Int(len(items)-1)]
 }
+
+var (
+	ErrNotEnoughItemsInSlice = errors.New("slice does not contain enough items")
+)
 
 // UniqueSliceItems returns a random item from the slice.
 func UniqueSliceItems[S ~[]T, T any](items S, count int) (S, error) {
@@ -38,7 +45,8 @@ func UniqueSliceItems[S ~[]T, T any](items S, count int) (S, error) {
 // If there are not enough items to select from, it returns an error.
 func (s *SliceProcessor[S, T]) UniqueItems(items S, count int) (S, error) {
 	if len(items) < count {
-		return nil, fmt.Errorf("not enough items to select from: %d < %d", len(items), count)
+		return nil, errors.Join(ErrNotEnoughItemsInSlice,
+			fmt.Errorf("not enough items to select from: %d < %d", len(items), count))
 	}
 
 	selectedItems := make(S, 0, count)

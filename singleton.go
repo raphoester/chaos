@@ -12,3 +12,7 @@ func Set(chaos *Chaos) {
 func Fix() {
 	singleton.Fix()
 }
+
+func Unfix() {
+	singleton.Unfix()
+}
