@@ -16,6 +16,15 @@ func Int[I constraints.Integer](n I, seed ...any) I {
 	return I(r.Int63n(int64(n)))
 }
 
+// IntInRange returns a deterministic integer between min and max (inclusive).
+func IntInRange(min, max int, seed ...any) int {
+	if max < min {
+		panic("max must be greater than or equal to min")
+	}
+	return min + Int(max-min, seed...)
+}
+
+
 // Bool returns a deterministic boolean.
 func Bool(seed ...any) bool {
 	return stringToSeed(seed)%2 == 0
@@ -25,6 +34,15 @@ func Bool(seed ...any) bool {
 func Duration(n time.Duration, seed ...any) time.Duration {
 	return time.Duration(Int(n.Nanoseconds(), seed))
 }
+
+// DurationInRange returns a deterministic duration between min and max.
+func DurationInRange(min, max time.Duration, seed ...any) time.Duration {
+	if max < min {
+		panic("max must be greater than or equal to min")
+	}
+	return min + Duration(max-min, seed...)
+}
+
 
 // Time returns a deterministic time between Unix epoch and 2106-02-07 08:28:16.
 func Time(seed ...any) time.Time {
@@ -37,6 +55,15 @@ func Float[F constraints.Float](n F, seed ...any) F {
 	r := rand.New(rand.NewSource(u))
 	return F(r.Float64()) * n
 }
+
+// FloatInRange returns a deterministic float between min and max.
+func FloatInRange(min, max float64, seed ...any) float64 {
+	if max < min {
+		panic("max must be greater than or equal to min")
+	}
+	return min + Float(max-min, seed...)
+}
+
 
 const alphanumericalChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
