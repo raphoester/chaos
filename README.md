@@ -39,8 +39,8 @@ func TestSaveUser(t *testing.T) {
     repository := NewRepository()
 
     // generate a random string of length 10 with the seed "firstName"
-    firstName := chaos.String(10, "firstName") 
-    lastName := chaos.String(10, "lastName")
+    firstName := chaos.String(10) 
+    lastName := chaos.String(10)
 	
     if err := repository.SaveUser(firstName, lastName); err != nil {
         t.Errorf("Error while saving user: %v", err)
