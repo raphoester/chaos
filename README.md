@@ -86,9 +86,9 @@ To run the tests for Chaos:
    git clone https://github.com/your-username/chaos.git
    cd chaos
    ```
-3. Run the tests using the `go test` command:
+3. Run the tests using the Makefile:
    ```bash
-   go test -v ./...
+   make test
    ```
 
 This will run all the tests in the package and display the results.
