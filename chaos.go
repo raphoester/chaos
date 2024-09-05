@@ -28,6 +28,10 @@ func (c *Chaos) Fix() {
 	c.fixed = true
 }
 
+func (c *Chaos) Unfix() {
+	c.fixed = false
+}
+
 func (c *Chaos) rand() *rand.Rand {
 	if !c.fixed {
 		c.count++

@@ -21,6 +21,9 @@ func Int32(n int32) int32 {
 //   - The generated integer is guaranteed to be within the range [0, n],
 //     including both 0 and n as possible values.
 func (c *Chaos) Int32(n int32) int32 {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
 	return r.Int31n(n + 1)
 }
@@ -40,6 +43,9 @@ func Int64(n int64) int64 {
 //   - The generated integer is guaranteed to be within the range [0, n],
 //     including both 0 and n as possible values.
 func (c *Chaos) Int64(n int64) int64 {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
 	return r.Int63n(n + 1)
 }
@@ -59,6 +65,9 @@ func Int(n int) int {
 //   - The generated integer is guaranteed to be within the range [0, n],
 //     including both 0 and n as possible values.
 func (c *Chaos) Int(n int) int {
+	if n <= 0 {
+		return 0
+	}
 	r := c.rand()
 	return r.Intn(n + 1)
 }
