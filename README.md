@@ -1,4 +1,6 @@
 # Chaos - Stop hardcoding test values !
+ 
+**WARNING: This library is still in its early development phase (semver 0.x). Retrocompatibility is not ensured.**
 
 ## Why Chaos ?
 
