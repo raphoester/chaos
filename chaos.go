@@ -16,8 +16,9 @@ func Int[I constraints.Integer](n I, seed ...any) I {
 	return I(r.Int63n(int64(n)))
 }
 
-// IntInRange returns a deterministic integer between min and max (inclusive).
-func IntInRange(min, max int, seed ...any) int {
+// MustIntInRange returns a deterministic integer between min and max (inclusive).
+// It panics if max is less than min.
+func MustIntInRange(min, max int, seed ...any) int {
 	if max < min {
 		panic("max must be greater than or equal to min")
 	}
@@ -35,8 +36,9 @@ func Duration(n time.Duration, seed ...any) time.Duration {
 	return time.Duration(Int(n.Nanoseconds(), seed))
 }
 
-// DurationInRange returns a deterministic duration between min and max.
-func DurationInRange(min, max time.Duration, seed ...any) time.Duration {
+// MustDurationInRange returns a deterministic duration between min and max.
+// It panics if max is less than min.
+func MustDurationInRange(min, max time.Duration, seed ...any) time.Duration {
 	if max < min {
 		panic("max must be greater than or equal to min")
 	}
@@ -56,8 +58,9 @@ func Float[F constraints.Float](n F, seed ...any) F {
 	return F(r.Float64()) * n
 }
 
-// FloatInRange returns a deterministic float between min and max.
-func FloatInRange(min, max float64, seed ...any) float64 {
+// MustFloatInRange returns a deterministic float between min and max.
+// It panics if max is less than min.
+func MustFloatInRange(min, max float64, seed ...any) float64 {
 	if max < min {
 		panic("max must be greater than or equal to min")
 	}
