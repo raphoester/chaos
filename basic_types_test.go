@@ -60,6 +60,40 @@ func TestInt(t *testing.T) {
 	})
 }
 
+func TestIntBetween(t *testing.T) {
+	t.Run("fixed chaos produces the same output", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		c.Fix()
+		assert.Equal(t, c.IntBetween(0, 100), c.IntBetween(0, 100))
+	})
+
+	t.Run("unfixed chaos produces unique results", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		results := make(map[int]bool)
+		for i := 0; i < 1000; i++ {
+			result := c.IntBetween(0, math.MaxInt32)
+			assert.False(t, results[result], "Expected unique result for each seed")
+			results[result] = true
+		}
+		assert.Len(t, results, 1000, "Expected 1000 unique results")
+	})
+
+	t.Run("respects bounds", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		min, max := 10, 20
+		for i := 0; i < 1000; i++ {
+			result := c.IntBetween(min, max)
+			assert.GreaterOrEqual(t, result, min)
+			assert.LessOrEqual(t, result, max)
+		}
+	})
+
+	t.Run("edge case: min equals max", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		assert.Equal(t, 10, c.IntBetween(10, 10))
+	})
+}
+
 func TestBool(t *testing.T) {
 	t.Run("deterministic output", func(t *testing.T) {
 		c := chaos.New(t.Name())
@@ -120,6 +154,40 @@ func TestDuration(t *testing.T) {
 	})
 }
 
+func TestDurationBetween(t *testing.T) {
+	t.Run("deterministic output", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		c.Fix()
+		assert.Equal(t, c.DurationBetween(0, time.Hour), c.DurationBetween(0, time.Hour))
+	})
+
+	t.Run("different seeds produce unique results", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		results := make(map[time.Duration]bool)
+		for i := 0; i < 1000; i++ {
+			result := c.DurationBetween(0, time.Hour)
+			assert.False(t, results[result], "Expected unique result for each seed")
+			results[result] = true
+		}
+		assert.Len(t, results, 1000, "Expected 1000 unique results")
+	})
+
+	t.Run("respects bounds", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		min, max := time.Minute, time.Hour
+		for i := 0; i < 1000; i++ {
+			result := c.DurationBetween(min, max)
+			assert.GreaterOrEqual(t, result, min)
+			assert.LessOrEqual(t, result, max)
+		}
+	})
+
+	t.Run("edge case: min equals max", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		assert.Equal(t, time.Hour, c.DurationBetween(time.Hour, time.Hour))
+	})
+}
+
 func TestTime(t *testing.T) {
 	t.Run("deterministic output", func(t *testing.T) {
 		c := chaos.New(t.Name())
@@ -154,6 +222,44 @@ func TestTime(t *testing.T) {
 		farFuture := time.Now().AddDate(100, 0, 0)
 		result := c.Time()
 		assert.True(t, result.Before(farFuture) || result.Equal(farFuture))
+	})
+}
+
+func TestFloat32(t *testing.T) {
+	t.Run("deterministic output", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		c.Fix()
+		assert.Equal(t, c.Float32(1.0), c.Float32(1.0))
+	})
+
+	t.Run("different seeds produce unique results", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		results := make(map[float32]bool)
+		for i := 0; i < 1000; i++ {
+			result := c.Float32(1.0)
+			assert.False(t, results[result], "Expected unique result for each seed")
+			results[result] = true
+		}
+		assert.Len(t, results, 1000, "Expected 1000 unique results")
+	})
+}
+
+func TestFloat32Between(t *testing.T) {
+	t.Run("deterministic output", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		c.Fix()
+		assert.Equal(t, c.Float32Between(0.0, 1.0), c.Float32Between(0.0, 1.0))
+	})
+
+	t.Run("different seeds produce unique results", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		results := make(map[float32]bool)
+		for i := 0; i < 1000; i++ {
+			result := c.Float32Between(0.0, 1.0)
+			assert.False(t, results[result], "Expected unique result for each seed")
+			results[result] = true
+		}
+		assert.Len(t, results, 1000, "Expected 1000 unique results")
 	})
 }
 
@@ -201,6 +307,48 @@ func TestFloat64(t *testing.T) {
 		result := c.Float64(1e-10)
 		assert.GreaterOrEqual(t, result, 0.0)
 		assert.Less(t, result, 1e-10)
+	})
+}
+
+func TestFloat64Between(t *testing.T) {
+	t.Run("deterministic output", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		c.Fix()
+		assert.Equal(t, c.Float64Between(0.0, 1.0), c.Float64Between(0.0, 1.0))
+	})
+
+	t.Run("different seeds produce unique results", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		results := make(map[float64]bool)
+		for i := 0; i < 1000; i++ {
+			result := c.Float64Between(0.0, 1.0)
+			assert.False(t, results[result], "Expected unique result for each seed")
+			results[result] = true
+		}
+		assert.Len(t, results, 1000, "Expected 1000 unique results")
+	})
+
+	t.Run("respects bounds", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		min, max := 1.5, 2.5
+		for i := 0; i < 1000; i++ {
+			result := c.Float64Between(min, max)
+			assert.GreaterOrEqual(t, result, min)
+			assert.LessOrEqual(t, result, max)
+		}
+	})
+
+	t.Run("edge case: min equals max", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		assert.Equal(t, 1.0, c.Float64Between(1.0, 1.0))
+	})
+
+	t.Run("edge case: very small range", func(t *testing.T) {
+		c := chaos.New(t.Name())
+		min, max := 1.0, 1.0+1e-10
+		result := c.Float64Between(min, max)
+		assert.GreaterOrEqual(t, result, min)
+		assert.LessOrEqual(t, result, max)
 	})
 }
 
