@@ -13,7 +13,7 @@ func TestSliceItem(t *testing.T) {
 	t.Run("deterministic output", func(t *testing.T) {
 		c := chaos.New(t.Name())
 		c.Fix()
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		assert.Equal(t, p.Item(items), p.Item(items))
@@ -21,7 +21,7 @@ func TestSliceItem(t *testing.T) {
 
 	t.Run("selects all items with equal probability", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 		items := []int{1, 2, 3, 4, 5}
 		results := make(map[int]int)
 		const iterations = 10000
@@ -38,7 +38,7 @@ func TestSliceItem(t *testing.T) {
 
 	t.Run("returns zero value for empty slice", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		pInt := chaos.NewSliceProcessor[[]int, int](c)
+		pInt := chaos.NewSliceProcessor[[]int](c)
 		pString := chaos.NewSliceProcessor[[]string, string](c)
 
 		var emptyIntSlice []int
@@ -50,7 +50,7 @@ func TestSliceItem(t *testing.T) {
 
 	t.Run("selects from all items", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		selected := make(map[int]bool)
@@ -62,14 +62,14 @@ func TestSliceItem(t *testing.T) {
 
 	t.Run("edge case: single item slice", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 		items := []int{42}
 		assert.Equal(t, 42, p.Item(items))
 	})
 
 	t.Run("selects all items with approximately equal probability", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 		items := []int{1, 2, 3, 4, 5}
 		results := make(map[int]int)
 		const iterations = 100000
@@ -93,7 +93,7 @@ func TestUniqueSliceItems(t *testing.T) {
 	t.Run("deterministic output", func(t *testing.T) {
 		c := chaos.New(t.Name())
 		c.Fix()
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		result1, err1 := p.UniqueItems(items, 3)
@@ -107,7 +107,7 @@ func TestUniqueSliceItems(t *testing.T) {
 	t.Run("returns error when not enough items", func(t *testing.T) {
 		c := chaos.New(t.Name())
 		c.Fix()
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3}
 		_, err := p.UniqueItems(items, 4)
@@ -116,7 +116,7 @@ func TestUniqueSliceItems(t *testing.T) {
 
 	t.Run("returns unique items", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		result, err := p.UniqueItems(items, 3)
@@ -127,7 +127,7 @@ func TestUniqueSliceItems(t *testing.T) {
 
 	t.Run("different seeds produce unique results up to maximum possible combinations", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		results := make(map[string]bool)
@@ -157,7 +157,7 @@ func TestUniqueSliceItems(t *testing.T) {
 
 	t.Run("edge case: request all items", func(t *testing.T) {
 		c := chaos.New(t.Name())
-		p := chaos.NewSliceProcessor[[]int, int](c)
+		p := chaos.NewSliceProcessor[[]int](c)
 
 		items := []int{1, 2, 3, 4, 5}
 		result, err := p.UniqueItems(items, 5)
