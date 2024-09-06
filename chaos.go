@@ -28,6 +28,8 @@ func (c *Chaos) Fix() {
 	c.fixed = true
 }
 
+// Unfix un-freezes the chaos.
+// This results in new values being generated for each method call.
 func (c *Chaos) Unfix() {
 	c.fixed = false
 }
