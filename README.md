@@ -1,4 +1,6 @@
 # Chaos - Stop hardcoding test values !
+ 
+**WARNING: This library is still in its early development phase (semver 0.x). Retrocompatibility is not ensured.**
 
 ## Why Chaos ?
 
@@ -38,9 +40,9 @@ Chaos is a library that generates "random" (deterministic) values for you, and m
 func TestSaveUser(t *testing.T) {
     repository := NewRepository()
 
-    // generate a random string of length 10 with the seed "firstName"
-    firstName := chaos.String(10, "firstName") 
-    lastName := chaos.String(10, "lastName")
+    // generate a random string of length 10 with the default seed
+    firstName := chaos.String(10) 
+    lastName := chaos.String(10)
 	
     if err := repository.SaveUser(firstName, lastName); err != nil {
         t.Errorf("Error while saving user: %v", err)
@@ -51,7 +53,9 @@ func TestSaveUser(t *testing.T) {
 Unlike your random seed (typically the current time), the hardcoded seed doesn't change between executions.
 That means you will get the same values every single time.
 
-There are many other functions that allow you to generate different kinds of values: 
+## Available Functions
+
+There are many functions that allow you to generate different kinds of values: 
 - Int
 - Float
 - Bool
@@ -59,3 +63,32 @@ There are many other functions that allow you to generate different kinds of val
 - UUID
 - Time
 - Slice items...
+
+For detailed usage of each function, please refer to the source code and test files.
+
+## Contributing
+
+If you'd like to contribute to Chaos, please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Running Tests
+
+To run the tests for Chaos:
+
+1. Make sure you have Go installed on your system.
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/chaos.git
+   cd chaos
+   ```
+3. Run the tests using the Makefile:
+   ```bash
+   make test
+   ```
+
+This will run all the tests in the package and display the results.
