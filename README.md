@@ -91,4 +91,4 @@ To run the tests for Chaos:
    make test
    ```
 
-This will run all the tests in the package and display the results.
+This will run all the tests in the package.
