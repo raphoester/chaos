@@ -99,7 +99,7 @@ func Time() time.Time {
 
 // Time returns a deterministic time between Unix epoch and 2106-02-07 08:28:16.
 func (c *Chaos) Time() time.Time {
-	return time.Unix(c.Int64(1<<32), 0)
+	return time.Unix(c.Int64(1<<32), 0).UTC()
 }
 
 // Float32 returns a random float32 between 0 and n.
